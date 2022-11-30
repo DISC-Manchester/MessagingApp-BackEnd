@@ -5,18 +5,16 @@ if(process.version.split("v")[1].split(".")[0] > 16) {
 const express = require('express');
 const app = express();
 
-const infernalScreaming = require('mongodb');
+const MongoDB = require('mongodb');
 
 const config = {http: {port: 8080}, mongo: {uri: "mongodb://localhost:27017"}}
 
-const death = new infernalScreaming.MongoClient(config.mongo.uri);
-
-// express pain in my veins
+const DbClient = new MongoDB.MongoClient(config.mongo.uri);
 
 app.use(express.json());
 
 app.get('/', async function(req, res) {
-	const db = death.db("exercise_forum");
+	const db = DbClient.db("exercise_forum");
 	
 	const records = await db.collection("messages").find().toArray();
 	
@@ -24,7 +22,7 @@ app.get('/', async function(req, res) {
 });
 
 app.post('/', async function(req, res) {
-	const db = death.db("exercise_forum");
+	const db = DbClient.db("exercise_forum");
 
 	if(!req.body.author || !req.body.message) {
 		return res.sendStatus(400);
@@ -39,7 +37,7 @@ app.post('/', async function(req, res) {
 });
 
 app.listen(config.http.port, async function() {
-	await death.connect();
+	await DbClient.connect();
 	
 	console.log(`[HTTP] open on ${config.http.port}`);
 });
