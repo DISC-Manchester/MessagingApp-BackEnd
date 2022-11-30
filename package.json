@@ -1,0 +1,15 @@
+{
+  "name": "exercise-forum-api",
+  "version": "0.0.1",
+  "description": "i never want to use mongodb again",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "yellows111",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^4.12.1"
+  }
+}
